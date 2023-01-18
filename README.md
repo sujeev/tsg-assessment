@@ -1,24 +1,34 @@
-# README
+###### README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+------------
 
-Things you may want to cover:
 
-* Ruby version
+This is an assement developed for Third Space Global. This was developed using:
+Ruby 2.7.5
+Ruby on Rails 7.0.4
+SQLite for quick development
 
-* System dependencies
 
-* Configuration
+##### What is completed
+- API only application, which contains the following
+	- DB scema
+	- API routes
+	- Included comments on how the business logic was developed
+	
+- API end points mentioned on the assessment
+	- Create booking
+	- Search for available timeslots
+	- Cancel booking
+	- Update booking
+	
+- Postman collection
+	- Includes API payload details
+	- Icnludes API responses
+	
+- Additional functionality
+	- API endpoint to get a list of booked slots
+	- validation
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+##### What could be included
+- Testing with Rspec
+- Integrate factory_bot gem to generate factories for testing
