@@ -7,6 +7,7 @@ class Booking < ApplicationRecord
   scope :filter_by_date, -> ( requested_date) { where(date_time:(requested_date.midnight)..(((requested_date + 1.day).midnight) - 1.second))}
   scope :filter_by_sport, -> ( sport) { joins(court: :sport).where( courts:{ sports: {name: sport}})}
 
+# Get a list of booked slots
   def self.booked_slots( lookup_date, sport)
     bookings = Booking.filter_by_date( valid_date( lookup_date))
     bookings = bookings.filter_by_sport( sport) if sport
@@ -15,6 +16,7 @@ class Booking < ApplicationRecord
     bookings
   end
 
+# Get a list of available slots
   def self.available_slots( lookup_date, sport)
     calculate_available_slots( valid_date( lookup_date), sport,
       booked_slots( lookup_date, sport))
@@ -23,12 +25,14 @@ class Booking < ApplicationRecord
   private
 
   def self.calculate_available_slots( lookup_date, sport, bookings)
+    # Get list of courts
     courts = Court.joins( :sport).includes( :sport)
     if sport
       courts = courts.where( sports:{name: sport})
     end
     courts = courts.select( :id, :name, :sport_id, :sport).order( :name)
 
+    # Iterate through the courts list and get a list of avaiable slots and remove any booked slots
     slots = []
     courts.each do |court|
       court_slots = []
@@ -42,6 +46,8 @@ class Booking < ApplicationRecord
     slots
   end
 
+# Get available slot list based on the lookup_date
+# This could be expanded if the Openning hours are different based on the dates and the day of the week
   def self.daily_slots(lookup_date)
     (1..24)
   end
